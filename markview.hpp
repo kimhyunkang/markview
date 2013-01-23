@@ -2,28 +2,28 @@
 #include <wx/wx.h>
 #include <wx/webview.h>
 
-class EMFrame: public wxFrame
+class ViewFrame: public wxFrame
 {
 private:
     wxWebView *viewer;
 
 public:
-    EMFrame(const wxString& title);
+    ViewFrame(const wxString& title);
 
     void OnClose(wxCommandEvent& evt);
 };
 
-class EMApp: public wxApp
+class MainApp: public wxApp
 {
 private:
-    std::vector<EMFrame *> frames;
+    std::vector<ViewFrame *> frames;
 
 public:
     virtual bool OnInit();
 
     void OnQuit(wxCommandEvent& evt);
 
-    void delete_child(EMFrame* frame);
+    void delete_child(ViewFrame* frame);
 
     DECLARE_EVENT_TABLE()
 };

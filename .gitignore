@@ -13,4 +13,4 @@
 *.a
 
 # OS X binary directory
-EditMarked.app/Contents/MacOS/
+MarkView.app/Contents/MacOS/

@@ -1,13 +1,13 @@
-#include "editmarked.hpp"
+#include "markview.hpp"
 
-EMFrame::EMFrame(const wxString& title)
+ViewFrame::ViewFrame(const wxString& title)
     : wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, wxSize(250, 150))
 {
     Centre();
 
     viewer = wxWebView::New(this,
                             wxID_ANY,
-                            "file:///Users/kimhyunkang/project/editmarked/temp.html");
+                            "file:///Users/kimhyunkang/project/markview/temp.html");
 
     wxMenuBar* menubar = new wxMenuBar();
     wxMenu* filemenu = new wxMenu();
@@ -24,9 +24,9 @@ EMFrame::EMFrame(const wxString& title)
     Show(true);
 }
 
-void EMFrame::OnClose(wxCommandEvent& evt)
+void ViewFrame::OnClose(wxCommandEvent& evt)
 {
-    EMApp *parent = (EMApp *)GetParent();
+    MainApp *parent = (MainApp *)GetParent();
     parent->delete_child(this);
 
     Close(true);

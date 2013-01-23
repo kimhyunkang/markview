@@ -1,13 +1,13 @@
-#include "editmarked.hpp"
+#include "markview.hpp"
 
-IMPLEMENT_APP(EMApp)
+IMPLEMENT_APP(MainApp)
 
-BEGIN_EVENT_TABLE(EMApp, wxApp)
-    EVT_MENU(wxID_CLOSE, EMFrame::OnClose)
-    EVT_MENU(wxID_EXIT, EMApp::OnQuit)
+BEGIN_EVENT_TABLE(MainApp, wxApp)
+    EVT_MENU(wxID_CLOSE, ViewFrame::OnClose)
+    EVT_MENU(wxID_EXIT, MainApp::OnQuit)
 END_EVENT_TABLE()
 
-bool EMApp::OnInit()
+bool MainApp::OnInit()
 {
 
 #ifdef __WXMAC__
@@ -15,20 +15,20 @@ bool EMApp::OnInit()
     wxApp::SetExitOnFrameDelete(false);
 #endif
 
-    EMFrame* frame = new EMFrame("EditMarked");
+    ViewFrame* frame = new ViewFrame("EditMarked");
     frames.push_back(frame);
 
     return true;
 }
 
-void EMApp::OnQuit(wxCommandEvent& evt)
+void MainApp::OnQuit(wxCommandEvent& evt)
 {
     exit(0);
 }
 
-void EMApp::delete_child(EMFrame* frame)
+void MainApp::delete_child(ViewFrame* frame)
 {
-    std::vector<EMFrame *>::iterator it = frames.begin();
+    std::vector<ViewFrame *>::iterator it = frames.begin();
     for( ; it != frames.end(); ++it) {
         if(*it == frame) {
             frames.erase(it);
