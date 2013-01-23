@@ -7,7 +7,7 @@ extern "C" {
     #include "html.h"
 }
 
-enum RenderingInputStreamErrorType
+enum RendererErrorType
 {
     RIS_IOError,
     RIS_MarkdownError,
@@ -16,29 +16,23 @@ enum RenderingInputStreamErrorType
 };
 
 // markdown-to-HTML renderer
-class RenderingInputStream : public wxInputStream
+class MarkdownRenderer
 {
 public:
-    RenderingInputStream();
-    virtual ~RenderingInputStream();
+    MarkdownRenderer();
 
     bool render(const char* filename);
 
-    const RenderingInputStreamErrorType getErrType(); 
+    const RendererErrorType getErrType(); 
     const char* getErrMsg();
-
-protected:
-    virtual size_t OnSysRead(void *buffer, size_t bufsize);
-
-    void release();
+    const wxString& getData();
 
 private:
     struct sd_callbacks callbacks;
     struct html_renderopt options;
 
-    struct buf *htmlbuf;
-    size_t bufpos;
+    wxString renderData;
 
-    RenderingInputStreamErrorType errtype;
+    RendererErrorType errtype;
     char* errmsg;
 };

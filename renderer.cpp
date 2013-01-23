@@ -4,24 +4,21 @@ extern "C" {
 #include <errno.h>
 }
 
-#include "renderstream.hpp"
+#include "renderer.hpp"
+#include <wx/strconv.h>
 
 #define READSIZE    4096
 
-RenderingInputStream::RenderingInputStream()
-    : htmlbuf(NULL), bufpos(0), errmsg(NULL), errtype(RIS_OtherError)
+MarkdownRenderer::MarkdownRenderer()
+    : errmsg(NULL), errtype(RIS_OtherError)
 {
     sdhtml_renderer(&callbacks, &options, 0);
 }
 
-RenderingInputStream::~RenderingInputStream()
-{
-    release();
-}
-
-bool RenderingInputStream::render(const char* filename)
+bool MarkdownRenderer::render(const char* filename)
 {
     struct buf* mdbuf = NULL;
+    struct buf* htmlbuf = NULL;
     struct sd_markdown *markdown = NULL;
     int ret;
     FILE* stream = fopen(filename, "r");
@@ -53,7 +50,6 @@ bool RenderingInputStream::render(const char* filename)
 
     fclose(stream);
 
-    release();
     htmlbuf = bufnew(READSIZE);
 
     if(!htmlbuf) {
@@ -70,53 +66,26 @@ bool RenderingInputStream::render(const char* filename)
     if(htmlbuf->size == 0) {
         errtype = RIS_MarkdownError;
         errmsg = "Rendering failed";
-        release();
         return false;
     }
 
-    bufpos = 0;
+    renderData = wxString(htmlbuf->data, wxConvUTF8, htmlbuf->size);
+    bufrelease(htmlbuf);
+
     return true;
 }
 
-void RenderingInputStream::release()
-{
-    if(htmlbuf) {
-        bufrelease(htmlbuf);
-        htmlbuf = NULL;
-        bufpos = 0;
-    }
-}
-
-size_t RenderingInputStream::OnSysRead(void *buffer, size_t bufsize)
-{
-    size_t copysize;
-
-    if(!htmlbuf) {
-        return 0;
-    }
-
-    copysize = htmlbuf->size - bufpos;
-    if(copysize <= 0 || bufsize <= 0) {
-        return 0;
-    }
-
-    if(bufsize < copysize) {
-        copysize = bufsize;
-    }
-
-    memcpy(buffer, (void *)(htmlbuf->data + bufpos), copysize);
-    bufpos += copysize;
-
-    return copysize;
-}
-
-
-const RenderingInputStreamErrorType RenderingInputStream::getErrType()
+const RendererErrorType MarkdownRenderer::getErrType()
 {
     return errtype;
 }
 
-const char* RenderingInputStream::getErrMsg()
+const char* MarkdownRenderer::getErrMsg()
 {
     return errmsg;
+}
+
+const wxString& MarkdownRenderer::getData()
+{
+    return renderData;
 }

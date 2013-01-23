@@ -1,6 +1,6 @@
 #include <iostream>
 #include "markview.hpp"
-#include "renderstream.hpp"
+#include "renderer.hpp"
 
 BEGIN_EVENT_TABLE(ViewFrame, wxFrame)
     EVT_MENU(wxID_CLOSE, ViewFrame::OnClose)
@@ -19,14 +19,14 @@ ViewFrame::ViewFrame(const wxString& filepath)
 
     SetMenuBar(menubar);
 
-    RenderingInputStream stream;
+    MarkdownRenderer renderer;
 
     viewer = wxWebView::New(this, wxID_ANY);
-    if(!stream.render(filepath.GetData())) {
-        std::cout << stream.getErrMsg() << std::endl;
+    if(!renderer.render(filepath.GetData())) {
+        std::cout << renderer.getErrMsg() << std::endl;
         return;
     }
-    viewer->SetPage(stream, filepath);
+    viewer->SetPage(renderer.getData(), filepath);
 
     Centre();
 

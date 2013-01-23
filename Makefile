@@ -21,14 +21,14 @@ all: $(APP)
 $(APPDIR):
 	-mkdir -p $@
 
-renderstream.o: renderstream.cpp renderstream.hpp
+renderer.o: renderer.cpp renderer.hpp
 	$(CXX) -c $< $(CXXFLAGS) -o $@
 
 viewframe.o: viewframe.cpp markview.hpp
 	$(CXX) -c $< $(CXXFLAGS) -o $@
 
-$(APP): $(APPDIR) main.cpp markview.hpp viewframe.o renderstream.o $(SUNDOWN_OBJ)
-	$(CXX) main.cpp viewframe.o renderstream.o $(SUNDOWN_OBJ) $(LIBS) $(CXXFLAGS) -o $@
+$(APP): $(APPDIR) main.cpp markview.hpp viewframe.o renderer.o $(SUNDOWN_OBJ)
+	$(CXX) main.cpp viewframe.o renderer.o $(SUNDOWN_OBJ) $(LIBS) $(CXXFLAGS) -o $@
 
 clean:
 	rm -rf $(APPDIR) *.o sundown/src/*.o sundown/html/*.o
