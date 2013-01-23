@@ -14,21 +14,8 @@ bool EMApp::OnInit()
     wxApp::SetExitOnFrameDelete(false);
 #endif
 
-    frame = new EMFrame("EditMarked");
-
-    wxMenuBar* menubar = new wxMenuBar();
-    wxMenu* filemenu = new wxMenu();
-
-    filemenu->Append(wxID_EXIT, "Quit\tCtrl-Q");
-    menubar->Append(filemenu, "File");
-
-#ifdef __WXMAC__
-    // set menu bar to be displayed when no frames are open
-    wxMenuBar::MacSetCommonMenuBar(menubar);
-#endif
-
-    frame->SetMenuBar(menubar);
-    frame->Show(true);
+    EMFrame* frame = new EMFrame("EditMarked");
+    frames.push_back(frame);
 
     return true;
 }

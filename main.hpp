@@ -1,10 +1,11 @@
+#include <vector>
 #include <wx/wx.h>
 #include "em_frame.hpp"
 
 class EMApp: public wxApp
 {
 private:
-    EMFrame *frame;
+    std::vector<EMFrame *> frames;
 
 public:
     DECLARE_EVENT_TABLE()
