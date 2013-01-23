@@ -23,6 +23,8 @@ private:
 public:
     virtual bool OnInit();
 
+    void OnOpen(wxCommandEvent& evt);
     void OnQuit(wxCommandEvent& evt);
-    void NewFrame(const wxString& title);
+    void OpenFile();
+    void NewFrame(const wxString& filepath);
 };
