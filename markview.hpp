@@ -7,6 +7,8 @@ class ViewFrame: public wxFrame
 private:
     wxWebView *viewer;
 
+    DECLARE_EVENT_TABLE()
+
 public:
     ViewFrame(const wxString& title);
 
@@ -16,14 +18,11 @@ public:
 class MainApp: public wxApp
 {
 private:
-    std::vector<ViewFrame *> frames;
+    DECLARE_EVENT_TABLE()
 
 public:
     virtual bool OnInit();
 
     void OnQuit(wxCommandEvent& evt);
-
-    void delete_child(ViewFrame* frame);
-
-    DECLARE_EVENT_TABLE()
+    void NewFrame(const wxString& title);
 };

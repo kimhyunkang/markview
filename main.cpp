@@ -3,36 +3,36 @@
 IMPLEMENT_APP(MainApp)
 
 BEGIN_EVENT_TABLE(MainApp, wxApp)
-    EVT_MENU(wxID_CLOSE, ViewFrame::OnClose)
     EVT_MENU(wxID_EXIT, MainApp::OnQuit)
 END_EVENT_TABLE()
 
 bool MainApp::OnInit()
 {
-
 #ifdef __WXMAC__
     // Mac users expect programs not to be terminated when main window closes
     wxApp::SetExitOnFrameDelete(false);
-#endif
 
-    ViewFrame* frame = new ViewFrame("EditMarked");
-    frames.push_back(frame);
+    // This menu bar only appears when there are no open windows
+    wxMenuBar* menubar = new wxMenuBar();
+    wxMenu* filemenu = new wxMenu();
+
+    filemenu->Append(wxID_EXIT, "Quit\tCtrl-Q");
+    menubar->Append(filemenu, "File");
+
+    wxMenuBar::MacSetCommonMenuBar(menubar);
+#endif // __WXMAC__
+
+    NewFrame("Empty File");
 
     return true;
 }
 
-void MainApp::OnQuit(wxCommandEvent& evt)
+void MainApp::NewFrame(const wxString& title)
 {
-    exit(0);
+    ViewFrame *frame = new ViewFrame("ViewFrame");
 }
 
-void MainApp::delete_child(ViewFrame* frame)
+void MainApp::OnQuit(wxCommandEvent& evt)
 {
-    std::vector<ViewFrame *>::iterator it = frames.begin();
-    for( ; it != frames.end(); ++it) {
-        if(*it == frame) {
-            frames.erase(it);
-            break;
-        }
-    }
+    ExitMainLoop();
 }

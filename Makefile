@@ -1,4 +1,4 @@
-CXXFLAGS=`wx-config --cxxflags`
+CXXFLAGS=`wx-config --cxxflags` -g
 LIBS=`wx-config --libs`
 CXX=clang++
 APPDIR=MarkView.app/Contents/MacOS
@@ -16,4 +16,4 @@ $(APP): $(APPDIR) main.cpp markview.hpp viewframe.o
 	$(CXX) main.cpp viewframe.o $(LIBS) $(CXXFLAGS) -o $@
 
 clean:
-	rm $(APP) *.o; rmdir $(APPDIR)
+	rm -rf $(APPDIR) *.o
