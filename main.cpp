@@ -26,7 +26,7 @@ void EMApp::OnQuit(wxCommandEvent& evt)
     exit(0);
 }
 
-void EMApp::close_child(EMFrame* frame)
+void EMApp::delete_child(EMFrame* frame)
 {
     std::vector<EMFrame *>::iterator it = frames.begin();
     for( ; it != frames.end(); ++it) {

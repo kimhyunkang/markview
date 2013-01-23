@@ -19,11 +19,11 @@ private:
     std::vector<EMFrame *> frames;
 
 public:
-    DECLARE_EVENT_TABLE()
-
     virtual bool OnInit();
 
     void OnQuit(wxCommandEvent& evt);
 
-    void close_child(EMFrame* frame);
+    void delete_child(EMFrame* frame);
+
+    DECLARE_EVENT_TABLE()
 };

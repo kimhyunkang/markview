@@ -26,5 +26,8 @@ EMFrame::EMFrame(const wxString& title)
 
 void EMFrame::OnClose(wxCommandEvent& evt)
 {
+    EMApp *parent = (EMApp *)GetParent();
+    parent->delete_child(this);
+
     Close(true);
 }
