@@ -1,5 +1,4 @@
-#include "em_frame.hpp"
-#include <wx/webview.h>
+#include "editmarked.hpp"
 
 EMFrame::EMFrame(const wxString& title)
     : wxFrame(NULL, wxID_ANY, title, wxDefaultPosition, wxSize(250, 150))
@@ -23,4 +22,9 @@ EMFrame::EMFrame(const wxString& title)
 
     SetMenuBar(menubar);
     Show(true);
+}
+
+void EMFrame::OnClose(wxCommandEvent& evt)
+{
+    Close(true);
 }

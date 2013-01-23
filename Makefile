@@ -9,10 +9,10 @@ all: $(APP)
 $(APPDIR):
 	-mkdir -p $@
 
-em_frame.o: em_frame.cpp em_frame.hpp
+em_frame.o: em_frame.cpp editmarked.hpp
 	$(CXX) -c $< $(CXXFLAGS) -o $@
 
-$(APP): $(APPDIR) main.cpp main.hpp em_frame.o
+$(APP): $(APPDIR) main.cpp editmarked.hpp em_frame.o
 	$(CXX) main.cpp em_frame.o $(LIBS) $(CXXFLAGS) -o $@
 
 clean:

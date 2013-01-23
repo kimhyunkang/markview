@@ -1,8 +1,9 @@
-#include "main.hpp"
+#include "editmarked.hpp"
 
 IMPLEMENT_APP(EMApp)
 
 BEGIN_EVENT_TABLE(EMApp, wxApp)
+    EVT_MENU(wxID_CLOSE, EMFrame::OnClose)
     EVT_MENU(wxID_EXIT, EMApp::OnQuit)
 END_EVENT_TABLE()
 
@@ -23,4 +24,15 @@ bool EMApp::OnInit()
 void EMApp::OnQuit(wxCommandEvent& evt)
 {
     exit(0);
+}
+
+void EMApp::close_child(EMFrame* frame)
+{
+    std::vector<EMFrame *>::iterator it = frames.begin();
+    for( ; it != frames.end(); ++it) {
+        if(*it == frame) {
+            frames.erase(it);
+            break;
+        }
+    }
 }
