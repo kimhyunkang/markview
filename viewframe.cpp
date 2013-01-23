@@ -13,7 +13,6 @@ ViewFrame::ViewFrame(const wxString& title)
                             wxID_ANY,
                             "file:///Users/kimhyunkang/project/markview/temp.html");
 
-    // This menu bar only appears when there are no open windows
     wxMenuBar* menubar = new wxMenuBar();
     wxMenu* filemenu = new wxMenu();
 
