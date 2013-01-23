@@ -32,7 +32,7 @@ bool MainApp::OnInit()
 
 void MainApp::OpenFile()
 {
-    wxFileDialog openFileDialog(NULL, "Open new file", "", "", "HTML files (*.html)|*.html", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+    wxFileDialog openFileDialog(NULL, "Open new file", "", "", "Markdown files (*.md)|*.md", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
 
     if(openFileDialog.ShowModal() == wxID_CANCEL) {
         return;
