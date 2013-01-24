@@ -6,12 +6,14 @@ class ViewFrame: public wxFrame
 {
 private:
     wxWebView *viewer;
+    bool frozen;
 
     DECLARE_EVENT_TABLE()
 
 public:
     ViewFrame(const wxString& title);
 
+    void OnNavigating(wxWebViewEvent& evt);
     void OnClose(wxCommandEvent& evt);
 };
 
@@ -28,3 +30,5 @@ public:
     void OpenFile();
     void NewFrame(const wxString& filepath);
 };
+
+void openBrowser(const wxString& url);

@@ -4,11 +4,14 @@
 
 BEGIN_EVENT_TABLE(ViewFrame, wxFrame)
     EVT_MENU(wxID_CLOSE, ViewFrame::OnClose)
+    EVT_WEB_VIEW_NAVIGATING(wxID_ANY, ViewFrame::OnNavigating)
 END_EVENT_TABLE()
 
 ViewFrame::ViewFrame(const wxString& filepath)
     : wxFrame(NULL, wxID_ANY, filepath, wxDefaultPosition, wxSize(250, 150))
 {
+    frozen = false;
+
     wxMenuBar* menubar = new wxMenuBar();
     wxMenu* filemenu = new wxMenu();
 
@@ -23,10 +26,11 @@ ViewFrame::ViewFrame(const wxString& filepath)
 
     viewer = wxWebView::New(this, wxID_ANY);
     if(!renderer.render(filepath.GetData())) {
-        std::cout << renderer.getErrMsg() << std::endl;
+        std::cerr << renderer.getErrMsg() << std::endl;
         return;
     }
     viewer->SetPage(renderer.getData(), filepath);
+    frozen = true;
 
     Centre();
 
@@ -36,4 +40,17 @@ ViewFrame::ViewFrame(const wxString& filepath)
 void ViewFrame::OnClose(wxCommandEvent& evt)
 {
     this->Destroy();
+}
+
+void ViewFrame::OnNavigating(wxWebViewEvent& evt)
+{
+    if(!frozen) {
+        return;
+    }
+
+    // veto event, to prohibit in-page links
+    evt.Veto();
+
+    // instead, load the default web-browser
+    openBrowser(evt.GetURL());
 }

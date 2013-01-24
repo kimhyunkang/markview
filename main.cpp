@@ -1,6 +1,11 @@
 #include "markview.hpp"
 #include <wx/filedlg.h>
 
+#ifdef __WXMAC__
+#include <CoreFoundation/CFBundle.h>
+#include <ApplicationServices/ApplicationServices.h>
+#endif // __WXMAC__
+
 IMPLEMENT_APP(MainApp)
 
 BEGIN_EVENT_TABLE(MainApp, wxApp)
@@ -52,3 +57,25 @@ void MainApp::OnQuit(wxCommandEvent& evt)
 {
     ExitMainLoop();
 }
+
+#ifdef __WXMAC__
+void openBrowser(const wxString& url)
+{
+    wxCharBuffer buf = url.mb_str();
+
+    CFURLRef ref = CFURLCreateWithBytes (
+            NULL,
+            (UInt8*)buf.data(),
+            buf.length(),
+            kCFStringEncodingASCII,
+            NULL
+        );
+    LSOpenCFURLRef(ref, 0);
+    CFRelease(ref);
+}
+#else
+void openBrowser(const wxString& url)
+{
+    // do nothing
+}
+#endif
