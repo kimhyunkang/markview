@@ -40,7 +40,7 @@ void MainApp::OpenFile()
 
     wxString filepath = openFileDialog.GetPath();
 
-    ViewFrame *frame = new ViewFrame(filepath);
+    new ViewFrame(filepath);
 }
 
 void MainApp::OnOpen(wxCommandEvent& evt)

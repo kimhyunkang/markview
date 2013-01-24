@@ -1,5 +1,5 @@
 CFLAGS=-c -g -O3 -fPIC -Wall -Werror -Wsign-compare -Isundown/src -Isundown/html
-CXXFLAGS=`wx-config --cxxflags` -g -Isundown/src -Isundown/html
+CXXFLAGS=`wx-config --cxxflags` -g -Isundown/src -Isundown/html -Wall -Werror -O3
 LIBS=`wx-config --libs`
 CXX=clang++
 CC=clang

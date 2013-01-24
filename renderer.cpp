@@ -10,7 +10,7 @@ extern "C" {
 #define READSIZE    4096
 
 MarkdownRenderer::MarkdownRenderer()
-    : errmsg(NULL), errtype(RIS_OtherError)
+    : errtype(RIS_OtherError), errmsg(NULL)
 {
     sdhtml_renderer(&callbacks, &options, 0);
 }

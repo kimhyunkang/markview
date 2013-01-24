@@ -34,5 +34,5 @@ private:
     wxString renderData;
 
     RendererErrorType errtype;
-    char* errmsg;
+    char const * errmsg;
 };
