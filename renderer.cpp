@@ -61,6 +61,7 @@ bool MarkdownRenderer::render(const char* filename)
 
     markdown = sd_markdown_new(0, 16, &callbacks, &options);
     sd_markdown_render(htmlbuf, mdbuf->data, mdbuf->size, markdown);
+    sd_markdown_free(markdown);
     bufrelease(mdbuf);
 
     if(htmlbuf->size == 0) {
